@@ -9,6 +9,7 @@ packages = [{include = "parlamind", from = "src"}]
 [tool.poetry.dependencies]
 python = "^3.13"
 pypdf2 = "^3.0.1"
+polars = "^1.21.0"
 
 
 [build-system]
