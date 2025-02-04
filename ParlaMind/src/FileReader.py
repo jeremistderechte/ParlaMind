@@ -29,9 +29,12 @@ def text_to_polars(plaintext: str) -> pl.DataFrame:
     Returns:
         pl.DataFrame: Returns polars DataFrame structured as Name, Party, Speech
     """
-    pattern = r"(?P<name>[A-ZÄÖÜa-zäöüß. ]+)\s*\((?P<party>[^)]+)\):\n(?P<speech>.*?)(?=\n[A-ZÄÖÜ]|\Z)"
 
-    matches = re.finditer(pattern, plaintext, re.DOTALL)
+    text_cleaned = re.sub(r"\(\s*(Zuruf|Beifall).*?\)", "", plaintext, flags=re.DOTALL)
+
+    pattern = r"(?P<name>[A-Za-zÄÖÜäöüß\s-]+)(?: \((?P<party>[A-Za-zÄÖÜäöüß\s/-]+)\))?:\n(?P<speech>.*?)(?=\n[A-ZÄÖÜ][A-Za-zÄÖÜäöüß\s-]+(?: \([A-Za-zÄÖÜäöüß\s/-]+\))?:|\nPräsidentin|$)"
+
+    matches = re.finditer(pattern, text_cleaned, re.DOTALL)
 
     data = [
         {
@@ -42,4 +45,4 @@ def text_to_polars(plaintext: str) -> pl.DataFrame:
         for m in matches
     ]
 
-    return pl.DataFrame(data)
+    return pl.DataFrame(data).drop_nulls()
