@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "parlamind"
+version = "0.1.0"
+description = ""
+authors = ["jeremistderechte <jeremy.barenkamp@web.de>"]
+readme = "README.md"
+packages = [{include = "parlamind", from = "src"}] 
+
+[tool.poetry.dependencies]
+python = "^3.13"
+pypdf2 = "^3.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
