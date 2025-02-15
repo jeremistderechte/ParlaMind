@@ -20,6 +20,7 @@ ruff = "^0.9.6"
 pdfminer-six = "^20240706"
 plotly = "^6.0.0"
 nbformat = "^5.10.4"
+pypdf2 = "^3.0.1"
 
 
 [build-system]
