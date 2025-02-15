@@ -225,5 +225,19 @@ def xml_to_polars(xml_string):
             })
 
     df = pl.DataFrame(data)
-    df = df.with_columns(pl.col("Datum").str.strptime(pl.Date, "%d.%m.%Y"))
+    #df = df.with_columns(pl.col("Datum").str.strptime(pl.Date, "%d.%m.%Y"))
     return df
+
+def put_all_xmls_into_one_df(folder_path):
+
+    xml_list = [f"{folder_path}/{f}" for f in os.listdir(folder_path) if f.endswith('.xml')]
+
+    dfs = []
+
+    for xml_file in xml_list:
+        with open(xml_file, "r", encoding="utf-8") as f:  # Encoding is important
+            xml_string = f.read()
+            df = xml_to_polars(xml_string)
+            dfs.append(df)
+
+    pl.concat(dfs)
