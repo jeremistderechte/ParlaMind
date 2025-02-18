@@ -7,9 +7,20 @@ readme = "README.md"
 packages = [{include = "parlamind", from = "src"}] 
 
 [tool.poetry.dependencies]
-python = "^3.13"
-pypdf2 = "^3.0.1"
+python = ">=3.11,<3.13"
+llvmlite = "0.44.0"
+spacy = "^3.8.4"
 polars = "^1.21.0"
+bertopic = "^0.16.4"
+ipykernel = "^6.29.5"
+dynaconf = "^3.2.7"
+aiohttp = "^3.11.12"
+tqdm = "^4.67.1"
+ruff = "^0.9.6"
+pdfminer-six = "^20240706"
+plotly = "^6.0.0"
+nbformat = "^5.10.4"
+pypdf2 = "^3.0.1"
 
 
 [build-system]

@@ -228,6 +228,9 @@ def xml_to_polars(xml_string):
     #df = df.with_columns(pl.col("Datum").str.strptime(pl.Date, "%d.%m.%Y"))
     return df
 
+
+
+
 def put_all_xmls_into_one_df(folder_path):
 
     xml_list = [f"{folder_path}/{f}" for f in os.listdir(folder_path) if f.endswith('.xml')]
@@ -239,5 +242,6 @@ def put_all_xmls_into_one_df(folder_path):
             xml_string = f.read()
             df = xml_to_polars(xml_string)
             dfs.append(df)
+            print(df)
 
     pl.concat(dfs)
