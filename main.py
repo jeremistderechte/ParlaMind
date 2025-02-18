@@ -33,4 +33,7 @@ if __name__ == "__main__":
 =======
     df = FileReader.put_all_xmls_into_one_df(folder_path)
     print(df)
+<<<<<<< HEAD
+>>>>>>> f2494db9f6a6da942ad9e5a454644af893e231ad
+=======
 >>>>>>> f2494db9f6a6da942ad9e5a454644af893e231ad
