@@ -242,6 +242,5 @@ def put_all_xmls_into_one_df(folder_path):
             xml_string = f.read()
             df = xml_to_polars(xml_string)
             dfs.append(df)
-            print(df)
 
-    pl.concat(dfs)
+    return pl.concat(dfs)
