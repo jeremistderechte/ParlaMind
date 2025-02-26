@@ -2,3 +2,7 @@ ParlaMind/src/20211.pdf
 ParlaMind/src/__pycache__/FileReader.cpython-313.pyc
 .~lock.temp.csv#
 ParlaMind/src/__pycache__/FileReader.cpython-312.pyc
+
+# Ignore dynaconf secret files
+.secrets.*
+__pycache__/config.cpython-312.pyc
