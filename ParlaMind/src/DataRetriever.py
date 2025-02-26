@@ -4,6 +4,7 @@ from datetime import datetime
 from tqdm import tqdm
 import re
 from config import settings
+from pathlib import Path
 
 # Retrieve from https://dip.bundestag.de/%C3%BCber-dip/hilfe/api
 API_KEY = settings.api_key
@@ -53,12 +54,20 @@ def download_data(format: str, start_year: int) -> None:
                     break
                 try:
                     if format.upper() == "XML":
-                        urllib.request.urlretrieve(url_xml, f"./data/speech-{date}.xml")
+                        file_name = f"./data/raw/XML/speech-{date}.xml"
+                        Path("./data/raw/XML/").mkdir(parents=True, exist_ok=True)
+
+                        my_file = Path(file_name)
+                        if my_file.is_file():
+                            pbar.update(1)
+                            continue
+
+                        urllib.request.urlretrieve(url_xml, file_name)
                     elif format.upper() == "PDF":
-                        urllib.request.urlretrieve(url_pdf, f"./data/speech-{date}.pdf")
+                        Path("./data/raw/XML/").mkdir(parents=True, exist_ok=True)
+                        urllib.request.urlretrieve(
+                            url_pdf, f"./data/raw/PDF/speech-{date}.pdf"
+                        )
                 except urllib.error.HTTPError:
                     print(f"Skipped data from {date}")
                 pbar.update(1)
-
-
-download_data()
