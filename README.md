@@ -4,6 +4,10 @@ ParlaMind is a project that analyzes speeches from the German Bundestag from **1
 
 <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmxiYWszc2Z5YXRndmhrejMzMHV6MThhNHNsNGV2YnBkNnZtcmo1dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bsx3TKhzktWhB8Ivjf/giphy.gif" width="300"/>
 
+## To-do
+- Distanz von Parteien ueber Zeit (timon)
+- Beginn mit 2005 bei textgen und classification (jeremy)
+- topic model (timon)
 
 ## Features
 - **Sentiment Analysis**: Determines the sentiment (positive, neutral, or negative) of speeches.
