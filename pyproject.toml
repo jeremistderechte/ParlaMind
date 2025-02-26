@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["jeremistderechte <jeremy.barenkamp@web.de>"]
 readme = "README.md"
-packages = [{include = "parlamind", from = "src"}] 
+packages = [{include = "src", from = "ParlaMind"}] 
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
