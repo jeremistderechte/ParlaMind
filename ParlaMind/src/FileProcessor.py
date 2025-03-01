@@ -110,10 +110,214 @@ def concat_od_with_xml(df_parla: pl.dataframe, save: bool) -> pl.DataFrame:
 
     df_parla = pl.concat([df_xml, df_parla]).unique()
 
-    if save:
-        Path("./data/formated/parquet/").mkdir(parents=True, exist_ok=True)
-        df_parla.write_parquet("ParlaMind.parquet")
-
     df_parla = __clean_df(df_parla)
 
-    return df_parla.sort("date")
+    df_politician = get_politician_df()
+
+    df_parla = df_parla.join(
+        df_politician,
+        left_on=["firstName", "lastName"],
+        right_on=["first_name", "last_name"],
+        how="left",
+    )
+
+    df_parla = df_parla.with_columns(
+        pl.when(pl.col("abbreviation").is_null())
+        .then(pl.col("Partei"))
+        .otherwise(pl.col("abbreviation"))
+        .alias("partei_aktualisiert")
+    )
+
+    df_parla = df_parla.drop(["abbreviation", "Name", "Partei"])
+
+    df_parla = df_parla.rename({"partei_aktualisiert": "abbreviation"})
+
+    df_parla = df_parla.sort("date")
+
+    if save:
+        Path("./data/formated/parquet/").mkdir(parents=True, exist_ok=True)
+        df_parla.write_parquet("./data/formated/parquet/ParlaMind.parquet")
+
+    return df_parla
+
+
+def get_politician_df():
+    politiker_liste = politiker = [
+        "Johann Saathoff (SPD)",
+        "Caren Marks (SPD)",
+        "Andreas Scheuer (CSU)",
+        "Carsten Schneider (SPD)",
+        "Marco Buschmann (FDP)",
+        "Klaus Holetschek (CSU)",
+        "Thomas Strobl (CDU)",
+        "Sven Schulze (CDU)",
+        "Boris Pistorius (SPD)",
+        "Anne Spiegel (Grüne)",
+        "Christian Lange (SPD)",
+        "Eva Högl (SPD)",
+        "Stephan Weil (SPD)",
+        "Andreas Bovenschulte (SPD)",
+        "Florian Pronold (SPD)",
+        "Siemtje Möller (SPD)",
+        "Thomas Schmidt (CDU)",
+        "Horst Seehofer (CSU)",
+        "Günter Krings (CDU)",
+        "Benjamin Strasser (FDP)",
+        "Dieter Janecek (Grüne)",
+        "Reiner Haseloff (CDU)",
+        "Helge Braun (CDU)",
+        "Nancy Faeser (SPD)",
+        "Olaf Scholz (SPD)",
+        "Peter Tauber (CDU)",
+        "Anna Lührmann (Grüne)",
+        "Dorothee Bär (CSU)",
+        "Anna Christmann (Grüne)",
+        "Rita Hagl-Kehl (SPD)",
+        "Wolfgang Schmidt (SPD)",
+        "Armin Schuster (CDU)",
+        "Steffen Bilger (CDU)",
+        "Kerstin Griese (SPD)",
+        "Luise Amtsberg (Grüne)",
+        "Jan-Niclas Gesenhues (Grüne)",
+        "Hubertus Heil (SPD)",
+        "Stephan Mayer (CSU)",
+        "Oliver Krischer (Grüne)",
+        "Cem Özdemir (Grüne)",
+        "Annette Widmann-Mauz (CDU)",
+        "Enak Ferlemann (CDU)",
+        "Daniela Behrens (SPD)",
+        "Bettina Hoffmann (Grüne)",
+        "Bettina Stark-Watzinger (FDP)",
+        "Julia Klöckner (CDU)",
+        "Karl Lauterbach (SPD)",
+        "Franziska Giffey (SPD)",
+        "Tobias Lindner (Grüne)",
+        "Judith Gerlach (CSU)",
+        "Claudia Müller (Grüne)",
+        "Anke Rehlinger (SPD)",
+        "Angela Merkel (CDU)",
+        "Ekin Deligöz (Grüne)",
+        "Michelle Müntefering (SPD)",
+        "Mahmut Özdemir (SPD)",
+        "Christian Lindner (FDP)",
+        "Joachim Stamp (FDP)",
+        "Jens Spahn (CDU)",
+        "Burkhard Blienert (SPD)",
+        "Thomas Hitschler (SPD)",
+        "Pascal Kober (FDP)",
+        "Robert Habeck (Grüne)",
+        "Heiko Maas (SPD)",
+        "Michael Müller (SPD)",
+        "Steffi Lemke (Grüne)",
+        "Florian Toncar (FDP)",
+        "Franziska Brantner (Grüne)",
+        "Armin Laschet (CDU)",
+        "Katja Kipping (Die Linke)",
+        "Bettina Jarasch (Grüne)",
+        "Peter Altmaier (CDU)",
+        "Markus Söder (CSU)",
+        "Cansel Kiziltepe (SPD)",
+        "Christine Lambrecht (SPD)",
+        "Sören Bartol (SPD)",
+        "Roman Poseck (CDU)",
+        "Felix Klein (parteilos)",
+        "Katja Hessel (FDP)",
+        "Mario Brandenburg (FDP)",
+        "Edgar Franke (SPD)",
+        "Thomas Gebhart (CDU)",
+        "Lena Kreck (Die Linke)",
+        "Gerd Müller (CSU)",
+        "Reem Alabali-Radovan (SPD)",
+        "Bodo Ramelow (Die Linke)",
+        "Michael Kellner (Grüne)",
+        "Jörg Steinbach (SPD)",
+        "Sven Lehmann (Grüne)",
+        "Annegret Kramp-Karrenbauer (CDU)",
+        "Daniela Kluckert (FDP)",
+        "Marion Gentges (CDU)",
+        "Mehmet Daimagüler (parteilos)",
+        "Oliver Luksic (FDP)",
+        "Felor Badenberg (parteilos)",
+        "Bärbel Kofler (SPD)",
+        "Claudia Roth (Grüne)",
+        "Rita Schwarzelühr-Sutter (SPD)",
+        "Peter Beuth (CDU)",
+        "Volker Wissing (FDP)",
+        "Jörg Kukies (SPD)",
+        "Christian Pegel (SPD)",
+        "Peter Tschentscher (SPD)",
+        "Alexander Schweitzer (SPD)",
+        "Maria Flachsbarth (CDU)",
+        "Malu Dreyer (SPD)",
+        "Sarah Ryglewski (SPD)",
+        "Anja Karliczek (CDU)",
+        "Annalena Baerbock (Grüne)",
+        "Sabine Dittmar (SPD)",
+        "Christian Kühn (Grüne)",
+        "Ophelia Nick (Grüne)",
+        "Katja Keul (Grüne)",
+        "Elisabeth Winkelmeier-Becker (CDU)",
+        "Kristina Sinemus (parteilos)",
+        "Natalie Pawlik (SPD)",
+        "Karl-Josef Laumann (CDU)",
+        "Thomas Silberhorn (CSU)",
+        "Klara Geywitz (SPD)",
+        "Boris Rhein (CDU)",
+        "Elisabeth Kaiser (SPD)",
+        "Lisa Paus (Grüne)",
+        "Thomas Bareiß (CDU)",
+        "Bettina Hagedorn (SPD)",
+        "Niels Annen (SPD)",
+        "Michael Roth (SPD)",
+        "Dietmar Woidke (SPD)",
+        "Anette Kramme (SPD)",
+        "Andreas Pinkwart (FDP)",
+        "Uli Grötsch (SPD)",
+        "Michael Theurer (FDP)",
+        "Svenja Schulze (SPD)",
+        "Monika Grütters (CDU)",
+        "Jens Brandenburg (FDP)",
+        "Ingmar Jung (CDU)",
+    ]
+
+    namen = []
+    first_names = []
+    last_names = []
+    parteien = []
+
+    party_translation = {
+        "AFD": "AfD",
+        "BSW": "BSW",  # No clear equivalent
+        "BÜNDNIS\xa090/DIEGRÜNEN": "Grüne",
+        "Grüne": "Grüne",
+        "CDU/CSU": "CDU/CSU",
+        "CSU": "CDU/CSU",
+        "CDU": "CDU/CSU",
+        "DIELINKE": "DIE LINKE.",
+        "Linke": "DIE LINKE.",
+        "FDP": "FDP",
+        "FRAKTIONSLOS": "Fraktionslos",
+        "parteilos": "Fraktionslos",
+        None: None,  # Represents missing or unspecified data
+        "SPD": "SPD",
+    }
+    for politiker in politiker_liste:
+        teile = politiker.strip().rsplit(" ", 1)
+        name = teile[0]
+        first_name = name.split()[0]
+        last_name = name.split()[1]
+        partei = party_translation[teile[1].strip("()")]
+
+        namen.append(name)
+        parteien.append(partei)
+        first_names.append(first_name)
+        last_names.append(last_name)
+
+    return pl.DataFrame(
+        {
+            "Name": namen,
+            "first_name": first_names,
+            "last_name": last_names,
+            "Partei": parteien,
+        }
+    )
