@@ -10,3 +10,6 @@ __pycache__/config.cpython-312.pyc
 ParlaMind/src/temp.parquet
 ParlaMind/src/__pycache__/DataRetriever.cpython-312.pyc
 ParlaMind/src/__pycache__/FileProcessor.cpython-312.pyc
+ParlaMind/src/topic_model_training.ipynb
+ParlaMind/src/wordcloud.ipynb
+reden.json

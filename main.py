@@ -8,8 +8,6 @@ if __name__ == "__main__":
 
     df_parla = FileProcessor.concat_od_with_xml(df_parla, False)
 
-    print(df_parla)
-
     """text = FileReader.extract_text_from_pdf("./ParlaMind/src/20211.pdf")
     with open("textdump.txt", "w") as file:
         file.write(text)

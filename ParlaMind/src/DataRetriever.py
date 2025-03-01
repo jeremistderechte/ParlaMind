@@ -64,10 +64,15 @@ def download_data(format: str, start_year: int) -> None:
 
                         urllib.request.urlretrieve(url_xml, file_name)
                     elif format.upper() == "PDF":
-                        Path("./data/raw/XML/").mkdir(parents=True, exist_ok=True)
-                        urllib.request.urlretrieve(
-                            url_pdf, f"./data/raw/PDF/speech-{date}.pdf"
-                        )
+                        file_name = f"./data/raw/PDF/speech-{date}.pdf"
+                        Path("./data/raw/PDF/").mkdir(parents=True, exist_ok=True)
+
+                        my_file = Path(file_name)
+                        if my_file.is_file():
+                            pbar.update(1)
+                            continue
+
+                        urllib.request.urlretrieve(url_pdf, file_name)
                 except urllib.error.HTTPError:
                     print(f"Skipped data from {date}")
                 pbar.update(1)
