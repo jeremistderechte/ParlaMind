@@ -1,6 +1,6 @@
 # ParlaMind
 
-ParlaMind is a project that analyzes speeches from the German Bundestag from **1949 to 2025**. It applies advanced **Natural Language Processing (NLP)** techniques to extract insights from political discourse, including **sentiment analysis, topic modeling, and speaker classification** using **BERT**.
+ParlaMind is a project that analyzes speeches from the German Bundestag from **1949 to 2025**. It applies advanced **Natural Language Processing (NLP)** techniques to extract insights from political discourse, including **sentiment analysis, topic modeling, and party classification** using **BERT**.
 
 <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmxiYWszc2Z5YXRndmhrejMzMHV6MThhNHNsNGV2YnBkNnZtcmo1dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bsx3TKhzktWhB8Ivjf/giphy.gif" width="300"/>
 
