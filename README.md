@@ -30,11 +30,9 @@ poetry install
 ### Running Analysis
 To analyze speeches, run:
 ```sh
-poetry run python main.py --task sentiment
+poetry run python main.py
 ```
-Other tasks:
-- `--task topic-modeling`
-- `--task speaker-classification`
+For it to run you need to have the speeches.csv and factions.csv in /data/raw/OpenDiscourse/ after that the XML files will be downloaded and turned into parquet file/polars df
 
 ### Dataset
 The dataset consists of Bundestag speeches from 1949–2025, preprocessed and stored in parquet format.
