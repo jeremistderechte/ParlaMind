@@ -27,7 +27,7 @@ To analyze speeches, run:
 ```sh
 poetry run python main.py
 ```
-For it to run you need to have the speeches.csv and factions.csv in /data/raw/OpenDiscourse/ from https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/FIKIBO after that the XML files will be downloaded and turned into parquet file/polars df. For the XML download you have to create a .secrets.toml with api_key = "your_api_key" from bundestag api. You can get the newest api from https://dip.bundestag.de/%C3%BCber-dip/hilfe/api.
+For it to run you need to have the speeches.csv and factions.csv in /data/raw/OpenDiscourse/ from https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/FIKIBO after that the XML files will be downloaded and turned into parquet file/polars df. For the XML download you have to create a .secrets.toml with api_key = "your_api_key" from bundestag api. You can get the newest api from https://dip.bundestag.de/%C3%BCber-dip/hilfe/api. After that you can finde the ParlaMind.parquet in /data/formated/parquet/.
 
 ### Dataset
 The dataset consists of Bundestag speeches from 1949–2025, preprocessed and stored in parquet format.
